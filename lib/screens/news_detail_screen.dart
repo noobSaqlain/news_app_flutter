@@ -48,6 +48,8 @@ class NewsDetailScreen extends StatelessWidget {
                     )
                   : const Icon(Icons.image_not_supported, size: 200),
 
+              const SizedBox(height: 16),
+
               // Text content
               Text(article.content ?? 'No Content Available'),
               const SizedBox(height: 16),

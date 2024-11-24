@@ -4,7 +4,7 @@ import '../models/article.dart';
 
 class NewsRepository {
   final String _baseUrl = "https://newsapi.org/v2/top-headlines";
-  final String _apiKey = "582b934a633f4fd3ac752685d6829dd5"; //new generated api
+  final String _apiKey = "9696005b0ec54835a7cfc18d5655166e"; //new generated api
   Future<List<Article>> fetchNews(String country) async {
     try {
       final response = await http

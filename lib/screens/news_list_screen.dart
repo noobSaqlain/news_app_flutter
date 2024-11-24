@@ -25,31 +25,8 @@ class _NewsListScreenState extends State<NewsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 120, 187, 250),
-        toolbarHeight: 80,
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  "Headline News",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "Read Top News Today",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-                ),
-              ],
-            ),
-            const Icon(
-              Icons.newspaper,
-              size: 30,
-              color: Colors.white,
-            ),
-          ],
-        ),
+        title: const Text('News App'),
+        backgroundColor: Colors.blueAccent,
       ),
       body: BlocBuilder<NewsBloc, NewsState>(
         builder: (context, state) {
