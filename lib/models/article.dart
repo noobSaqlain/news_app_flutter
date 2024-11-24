@@ -5,6 +5,7 @@ class Article {
   final String? urlToImage;
   final String? content;
   final String? publishedAt;
+  final String? url;
 
   Article(
       {this.title,
@@ -12,16 +13,17 @@ class Article {
       this.author,
       this.urlToImage,
       this.content,
-      this.publishedAt});
+      this.publishedAt,
+      this.url});
 
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
-      title: json['title'],
-      description: json['description'],
-      author: json['author'],
-      urlToImage: json['urlToImage'],
-      content: json['content'],
-      publishedAt: json['publishedAt'],
-    );
+        title: json['title'],
+        description: json['description'],
+        author: json['author'],
+        urlToImage: json['urlToImage'],
+        content: json['content'],
+        publishedAt: json['publishedAt'],
+        url: json['url']);
   }
 }

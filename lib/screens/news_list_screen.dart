@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import '../blocs/news_bloc.dart';
 import '../blocs/news_event.dart';
 import '../blocs/news_state.dart';
@@ -17,15 +18,38 @@ class _NewsListScreenState extends State<NewsListScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<NewsBloc>().add(FetchNews('pk'));
+    context.read<NewsBloc>().add(FetchNews('us'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News App'),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: const Color.fromARGB(255, 120, 187, 250),
+        toolbarHeight: 80,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  "Headline News",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Read Top News Today",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                ),
+              ],
+            ),
+            const Icon(
+              Icons.newspaper,
+              size: 30,
+              color: Colors.white,
+            ),
+          ],
+        ),
       ),
       body: BlocBuilder<NewsBloc, NewsState>(
         builder: (context, state) {
@@ -63,20 +87,31 @@ class _NewsListScreenState extends State<NewsListScreen> {
                               topLeft: Radius.circular(12.0),
                               bottomLeft: Radius.circular(12.0),
                             ),
-                            child: article.urlToImage != null
+                            child: article.urlToImage != null &&
+                                    article.urlToImage!.isNotEmpty
                                 ? Image.network(
                                     article.urlToImage!,
                                     width: 100,
                                     height: 100,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      // Fallback to icon if image fails to load
+                                      return const Icon(
+                                        Icons.image_not_supported,
+                                        size: 100,
+                                      );
+                                    },
                                   )
                                 : const SizedBox(
                                     width: 100,
                                     height: 100,
-                                    child: Icon(Icons.image_not_supported,
-                                        size: 50),
+                                    child: Icon(
+                                      Icons.image_not_supported,
+                                      size: 100,
+                                    ),
                                   ),
                           ),
+
                           // Article Text Information
                           Expanded(
                             child: Padding(
@@ -97,23 +132,18 @@ class _NewsListScreenState extends State<NewsListScreen> {
                                   ),
                                   const SizedBox(height: 4.0),
                                   Text(
-                                    article.description ??
-                                        'No Description Available',
-                                    style: const TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.grey,
-                                    ),
-                                    maxLines: 2, // Limit description to 2 lines
-                                    overflow:
-                                        TextOverflow.ellipsis, // Add ellipses
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  Text(
                                     article.author ?? 'Unknown Author',
                                     style: const TextStyle(
                                       fontSize: 12.0,
                                       color: Colors.grey,
                                     ),
+                                  ),
+                                  Text(
+                                    article.publishedAt != null
+                                        ? 'Published: ${DateFormat('MMM d, y').format(DateTime.parse(article.publishedAt!))}'
+                                        : 'Published: date',
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 12),
                                   ),
                                 ],
                               ),
